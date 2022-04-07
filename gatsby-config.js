@@ -125,7 +125,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `publications`,
-        path: `${__dirname}/src/assets/Publications/bib`,
+        path: `${__dirname}/src/assets/pubs/bib`,
       },
     },
     'gatsby-transformer-bibtex',

@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
-import { MdEmail, MdLocationPin } from "react-icons/md"
+import { MdEmail } from "react-icons/md"
 import { ImPhone, ImLocation } from "react-icons/im"
 
 import Layout from "../components/layout"

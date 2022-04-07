@@ -27,8 +27,6 @@ import BlogListHome from "../components/blog-list-home"
 import Seo from "../components/seo"
 import Icons from "../util/socialmedia.json"
 
-import { Timeline } from 'react-twitter-widgets'
-
 export const pageQuery = graphql`
   query HomeQuery($id: String!) {
     markdownRemark(id: { eq: $id }) {
@@ -72,12 +70,6 @@ export const pageQuery = graphql`
     }
   }
 `
-
-const layoutStyle = {
-  indexTeaser: {
-    alignItems: "center",
-  },
-}
 
 const HomePage = ({ data }) => {
   const { markdownRemark, posts } = data // data.markdownRemark holds your post data

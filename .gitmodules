@@ -1,0 +1,3 @@
+[submodule "src/assets/pubs"]
+	path = src/assets/pubs
+	url = https://github.com/nyuta1212/publications.git

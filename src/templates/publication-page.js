@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { 
@@ -33,12 +33,9 @@ export const pageQuery = graphql`
           title
           author
           authors
-          journal
-          booktitle
           year
           date
           entry_type
-          note
           raw
         }
       }
@@ -51,13 +48,13 @@ const RenderItems = items => {
   return items.map((_item,_key) => {
     const links = [];
     if (_item.url) {
-      links.push((<a className={`${btn} ${btnBlue}`} href={_item.url} target="_blank">URL</a>));
+      links.push((<a className={`${btn} ${btnBlue}`} href={_item.url} target="_blank" rel="noreferrer">URL</a>));
     }
     if (_item.arxiv) {
-      links.push((<a className={`${btn} ${btnBlue}`} href={_item.arxiv} target="_blank">ArXiv</a>));
+      links.push((<a className={`${btn} ${btnBlue}`} href={_item.arxiv} target="_blank" rel="noreferrer">ArXiv</a>));
     }
     if (_item.website) {
-      links.push((<a className={`${btn} ${btnBlue}`} href={_item.website} target="_blank">Website</a>));
+      links.push((<a className={`${btn} ${btnBlue}`} href={_item.website} target="_blank" rel="noreferrer">Website</a>));
     }
 
     return(
@@ -66,7 +63,8 @@ const RenderItems = items => {
         <p className={authors}>{_item.author}</p>  
         <p className={venue}>
           {_item.entry_type === 'article' ? (_item.journal + ', ') :
-            _item.entry_type === 'inproceedings' ? (_item.booktitle + ', ') : _item.note}
+            _item.entry_type === 'inproceedings' ? (_item.booktitle + ', ') : 
+              _item.note ? _item.note : ''}
           {_item.month} {_item.year}
         </p>
         { links} 
@@ -156,11 +154,15 @@ const PublicationPage = ({ data }) => {
 
   const dict = allReference.edges.map((_item, _key) => {
     const n2mon = ['', 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Set.', 'Oct.', 'Nov.', 'Dec.', ''];
-    const month = _item.node.raw.match(/month\s*=\s*(\d+),?\s/);
-    const year =  _item.node.raw.match(/year\s*=\s*["{]\s*(\d+)\s*["}],?\s/);
-    const url =  _item.node.raw.match(/url\s*=\s*["{]\s*(.+)\s*["}],?\s/);
-    const arxiv =  _item.node.raw.match(/arxiv\s*=\s*["{]\s*(.+)\s*["}],?\s/);
-    const website =  _item.node.raw.match(/website\s*=\s*["{]\s*(.+)\s*["}],?\s/);
+    const booktitle =  _item.node.raw.match(/booktitle\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+    const journal =  _item.node.raw.match(/journal\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+    const month = _item.node.raw.match(/month\s*=\s*(\d+),?\s/i);
+    const year =  _item.node.raw.match(/year\s*=\s*["{]\s*(\d+)\s*["}],?\s/i);
+    const url =  _item.node.raw.match(/url\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+    const arxiv =  _item.node.raw.match(/arxiv\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+    const website =  _item.node.raw.match(/website\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+    const note =  _item.node.raw.match(/note\s*=\s*["{]\s*(.+)\s*["}],?\s/i);
+
     let ym;
     let m;
 
@@ -176,14 +178,14 @@ const PublicationPage = ({ data }) => {
     n['date_key'] = ym;
     n['month'] = m;
     n['author'] = n.authors.join(', ').replaceAll('\\underline', '').replaceAll('~', ' ');
-    if (n.journal) {
-      n['journal'] = n.journal.replace('~', ' ');
+    if (journal) {
+      n['journal'] = journal[1].replace('~', ' ');
     }
-    if (n.booktitle) {
-      n['booktitle'] = n.booktitle.replace('~', ' ');
+    if (booktitle) {
+      n['booktitle'] = booktitle[1].replace('~', ' ');
     }
-    if (n.note) {
-      n['note'] = n.note.replaceAll('~', ' ').replaceAll('--', '-');
+    if (note) {
+      n['note'] = note[1].replaceAll('~', ' ').replaceAll('--', '-');
     }
     if (url) {
       n['url'] = url[1];
