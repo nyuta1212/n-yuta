@@ -11,6 +11,8 @@ import Footer from "./footer"
 import Theme from "../components/theme"
 import Search from "../components/search"
 
+import "@fontsource/montserrat/700.css"
+
 const query = graphql`
   query LayoutQuery {
     site {

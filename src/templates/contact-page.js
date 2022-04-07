@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import { RiSendPlane2Line } from "react-icons/ri"
+
+import { MdEmail, MdLocationPin } from "react-icons/md"
+import { ImPhone, ImLocation } from "react-icons/im"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -40,53 +42,18 @@ const Contact = ({ data }) => {
           className="description"
           dangerouslySetInnerHTML={{ __html: html }}
         />
-        <form
-          className="contact-form"
-          action="/thanks"
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-          <p>
-            <label>
-              Name
-              <input type="text" name="name" required />
-            </label>
-          </p>
-          <p>
-            <label>
-              Email
-              <input type="email" name="email" required />
-            </label>
-          </p>
-          <p>
-            <label>
-              Subject
-              <input type="text" name="subject" required />
-            </label>
-          </p>
-          <p>
-            <label>
-              Message<textarea name="message" required></textarea>
-            </label>
-          </p>
-          <p className="text-align-right">
-            <button
-              className="button"
-              sx={{
-                variant: "variants.button",
-              }}
-              type="submit"
-            >
-              Send Message{" "}
-              <span className="icon -right">
-                <RiSendPlane2Line />
-              </span>
-            </button>
-          </p>
-        </form>
+        <div style={{display: "flex", alignItems: "center"}}>
+          <span style={{fontSize: "40px"}}><MdEmail /></span> 
+          <span style={{paddingBottom: "10px", paddingLeft: "1rem"}}>n-yuta[at]ids.osaka-u.ac.jp / nyuta1212[at]gmail.com</span>
+        </div>
+        <div style={{display: "flex", alignItems: "center"}}>
+          <span style={{fontSize: "40px"}}><ImPhone /></span> 
+          <span style={{paddingBottom: "10px", paddingLeft: "1rem"}}>06-6105-6070</span>
+        </div>
+        <div style={{display: "flex", alignItems: "center"}}>
+          <span style={{fontSize: "40px"}}><ImLocation /></span> 
+          <span style={{paddingBottom: "10px", paddingLeft: "1rem"}}>2-8 Technoalliance Building C503, Yamadaoka, Suita, Osaka 565-0872</span>
+        </div>
       </div>
     </Layout>
   )

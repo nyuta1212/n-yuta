@@ -20,11 +20,14 @@ import {
   RiBehanceFill,
 } from "react-icons/ri"
 import { FaWordpress, FaVk } from "react-icons/fa"
+import { SiGooglescholar } from "react-icons/si"
 
 import Layout from "../components/layout"
 import BlogListHome from "../components/blog-list-home"
 import Seo from "../components/seo"
 import Icons from "../util/socialmedia.json"
+
+import { Timeline } from 'react-twitter-widgets'
 
 export const pageQuery = graphql`
   query HomeQuery($id: String!) {
@@ -36,7 +39,7 @@ export const pageQuery = graphql`
         tagline
         featuredImage {
           childImageSharp {
-            gatsbyImageData(layout: CONSTRAINED, width: 585, height: 439)
+            gatsbyImageData(layout: CONSTRAINED, width: 300, height: 300)
           }
         }
         cta {
@@ -69,6 +72,12 @@ export const pageQuery = graphql`
     }
   }
 `
+
+const layoutStyle = {
+  indexTeaser: {
+    alignItems: "center",
+  },
+}
 
 const HomePage = ({ data }) => {
   const { markdownRemark, posts } = data // data.markdownRemark holds your post data
@@ -191,13 +200,20 @@ const HomePage = ({ data }) => {
         ) : (
           ""
         )}
+        {icons.icon === "scholar" ? (
+          <Link to={icons.url} target="_blank">
+            <SiGooglescholar />
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     )
   })
   return (
     <Layout>
       <Seo />
-      <div className="home-banner grids col-1 sm-2">
+      <div className="home-banner grids col-2 sm-2">
         <div>
           <h1 className="title">{frontmatter.title}</h1>
           <p
@@ -224,16 +240,14 @@ const HomePage = ({ data }) => {
               <RiArrowRightSLine />
             </span>
           </Link>
-          <div
-            className="social-icons"
-            sx={{
-              variant: "variants.socialIcons",
-            }}
-          >
-            {sIcons}
-          </div>
+
         </div>
-        <div>
+        <div style={{
+          gridArea: "1/2",
+          position: "relative",
+          placeItems: "center",
+          display: "grid",
+          }}>
           {Image ? (
             <GatsbyImage
               image={Image}
@@ -243,6 +257,37 @@ const HomePage = ({ data }) => {
           ) : (
             ""
           )}
+          <div
+            className="social-icons"
+            sx={{
+              variant: "variants.socialIcons",
+            }}
+            styles={{ textAlign: 'center'}}
+          >
+            {sIcons}
+          </div>
+        </div>
+        <div style={{
+          gridArea: "2/1",
+          //position: "relative",
+          //placeContent: "flex-start",
+          //alignContent: "flex-start",
+          justifyContent: "flex-start",
+          //alignItems: "flex-start",
+          //justifyItems: "flex-start",
+          display: "grid",
+          //flexDirection : 'row'
+          flex: 1
+          }}>
+          <h2>What's going on?</h2>
+        </div>
+        <div style={{
+          gridArea: "2/2",
+          position: "relative",
+          placeItems: "center",
+          display: "grid",
+          }}>
+          <a class="twitter-timeline" href="https://twitter.com/YutaNakashima4?ref_src=twsrc%5Etfw">Tweets by Yuta Nakashima</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
       </div>
       <BlogListHome data={posts} />

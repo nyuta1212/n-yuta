@@ -121,5 +121,22 @@ module.exports = {
         generateMatchPathRewrites: true,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `publications`,
+        path: `${__dirname}/src/assets/Publications/bib`,
+      },
+    },
+    'gatsby-transformer-bibtex',
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `montserrat`,
+        ],
+        display: 'swap'
+      }
+    }
   ],
 }
