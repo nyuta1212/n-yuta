@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: nyuta1212/n-yuta
   branch: main
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"
